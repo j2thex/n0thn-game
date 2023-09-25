@@ -16,3 +16,35 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
+
+
+const http = require('http');
+const socketIo = require('socket.io');
+
+
+const server = http.createServer(app);
+const io = socketIo(server);
+let players = [];
+io.on('connection', (socket) => {
+    console.log('a user connected');
+    if (players.length < 2) {
+        players.push(socket.id);
+        socket.emit('assignCharacter', players.length === 1 ? 'character1' : 'character2');
+    }
+    
+    socket.on('moveCharacter', (data) => {
+        // Broadcast the movement data to other clients
+        socket.broadcast.emit('characterMoved', data);
+    });
+    
+    // Handle movement events here
+
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
+});
+
+server.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
+
