@@ -1,0 +1,11 @@
+{
+  "name": "n0thn-game",
+  "version": "1.0.0",
+  "description": "yo! sup fine this is the readme file",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
