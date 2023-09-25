@@ -29,8 +29,11 @@ io.on('connection', (socket) => {
     }
 
     socket.on('moveCharacter', (data) => {
-        console.log('Received movement data on server:', data);
-        socket.broadcast.emit('characterMoved', data);
+        console.log('Received moveCharacter event from client:', data);
+
+        io.emit('characterMoved', data);
+
+
     });
 
 

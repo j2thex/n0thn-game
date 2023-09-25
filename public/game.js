@@ -81,12 +81,24 @@ this.input.keyboard.on('keydown', (event) => {
 function update() {
 
     if (char1Movement) {
+        console.log("Moving character1:", char1Movement);
+        if (char1Movement === 'ArrowUp') {
+            char1.y -= 5;
+        } else if (char1Movement === 'ArrowDown') {
+            char1.y += 5;
+        }
         handleMovement(char1, char1Movement);
         char1Movement = null;
     }
 
     // Handle character2 movement
     if (char2Movement) {
+        console.log("Moving character2:", char2Movement);
+        if (char2Movement === 'ArrowUp') {
+            char2.y -= 5;
+        } else if (char2Movement === 'ArrowDown') {
+            char2.y += 5;
+        }
         handleMovement(char2, char2Movement);
         char2Movement = null;
     }
@@ -108,3 +120,11 @@ function handleMovement(character, direction) {
             break;
     }
 }
+socket.on('characterMoved', (data) => {
+    console.log('Client received characterMoved event:', data);
+    if (data.character === 'character1') {
+        char1Movement = data.direction;
+    } else {
+        char2Movement = data.direction;
+    }
+});
